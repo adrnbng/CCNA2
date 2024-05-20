@@ -1,0 +1,469 @@
+DNS IPv4: verizon.com.ph
+DNS IPv6: epldt.com.ph
+
+TASK1: Cisco Security Fundamentals.
+cmd
+ping 10.k.1.10
+
+c>nmap -sP 10.m.1.0/24    c>nmap -sP 10.m.100.0/24
+10.m.1.10?                   10.m.100.8
+TASK2: How to begin hacking Layer 3:
+HOw get all the IP address of your victim:
+
+nmap -v 10.k.1.10        nmap -v 10.k.100.8
+is 139/445 open?
+
+how to attack 139/445? because you DONT have a firewall!
+
+net  use  \\10.k.1.10\ipc$  "attacks 139, and connects to it."
+"privilege escalation"
+net  use  s: \\10.k.1.10\c$  /user:administrator
+
+net  use  s: \\10.k.1.10\c$
+
+TASK3: When you become a Security Analyst:
+Learn to Block the IPaddress from 3 "BAD" countries:
+NorthKorea, RUSSIA, China.= where all the Best hackers live.
+runner-up: Nigeria: "love scam!"
+
+:Use standard Access-list[1 to 99] to block IP address from
+all evil countries:
+@edge: "version1: permit your friends, block all else!"
+config t
+no access-list 1
+access-list 1 permit 10.12.0.0 0.0.255.255
+access-list 1 permit 10.22.0.0 0.0.255.255
+access-list 1 permit 10.32.0.0 0.0.255.255
+access-list 1 permit 10.42.0.0 0.0.255.255
+access-list 1 permit 10.52.0.0 0.0.255.255
+access-list 1 deny ANY
+do sh ip access-list 1
+
+Version2: "deny/block k=kalaban!"
+config t
+no access-list 2
+access-list 2 Deny 10.11.0.0 0.0.255.255
+access-list 2 deny 10.21.0.0 0.0.255.255
+access-list 2 deny 10.31.0.0 0.0.255.255
+access-list 2 deny 10.41.0.0 0.0.255.255
+access-list 2 deny 10.51.0.0 0.0.255.255
+access-list 2 Permit ANY
+do sh ip access-list 2
+
+How to use the access-list: access-group:
+@ use version to permit your friends:
+config t
+Interface Gi0/0/1
+ NO IP access-group 1 in
+ end
+
+@apply acl2:
+config t
+Interface Gi0/0/1
+ IP access-group 2 in
+ end
+
+@apply acl2:
+config t
+Interface Gi0/0/1
+ NO IP access-group 2 in
+ end
+
+Example: use ACl 3 or 4: 
+config t
+no access-list 3
+access-list 3 permit 10.11.0.0 0.0.255.255
+access-list 3 permit 10.12.0.0 0.0.255.255
+access-list 3 permit 10.22.0.0 0.0.255.255
+access-list 3 permit 10.21.0.0 0.0.255.255
+access-list 3 permit 10.32.0.0 0.0.255.255
+access-list 3 deny ANY
+do sh ip access-list 3
+Interface Gi0/0/1
+  IP access-group 3 in
+@@version 2:
+config t
+no access-list 5
+access-list 5 Permit 10.12.0.0 0.0.255.255
+access-list 5 Permit 10.22.0.0 0.0.255.255
+access-list 5 deny ANY
+do sh ip access-list 5
+Interface Gi0/0/1
+  no IP access-group 5 in
+
+TASK4: Experience a day as a
+How to be CyberSecurityEnginner/Analyst/PenetrationTester?
+
+How to attack:
+c> netstat -ano
+
+CUCM-12#show control-plane host open-ports
+
+Summary: NaUbos/Nalimas ang OnlineBankAccount
+         CryptoWallet, mouse
+
+netstat  -s  -p  tcp
+
+TASK5: HOW TO START A CAREER IN NETWORK CYBERSECURITY FOR FREE!!
+intentionally hackable websites
+1. Hack The Box
+2. CTFlearn
+3. bWAPP
+4. HackThisSite
+5. Google Gruyere
+6. Damn Vulnerable iOS App - DVIA
+7. Hellbound Hackers
+8. OWASP Mutillidae II
+9. HackThis!!
+
+task6: How to Make CUCM intentionally hackable to Learn
+the Basics for Firewalls.
+before: nmap -v 10.m.100.8
+@Cucm:
+config t
+int fa 0/0
+ ip add 10.m.100.9 255.255.255.0 Secondary
+service finger
+service tcp-small-servers
+service udp-small-servers
+ip dns server
+ip http server
+ip http secure-server
+!Make Ping EASY
+ip host pc 10.m.1.10
+ip host cm 10.m.100.8
+ip host cm2 10.m.100.9
+ip host p1 10.m.100.101
+ip host p2 10.m.100.102
+ip host sw 10.m.1.4
+ip host ed 10.m.m.1
+
+TASK7: Enter the World of BlueTeam: Protect vs Redteam: Attack, 
+BlueTeam: UTM: unified Threat management:
+1. firewall
+2. VPN
+3. EnterpriseAnti-Virus
+4. IntrusionDetection/IntrusionPrevention
+5  Network Admissions Control.
+Top 5 UTM: 1.FortinetFortigate:
+           1.1: Palo Alto:superSuplado
+           2. Checkpoint
+           3.4 Cisco
+
+TASK8: CONGigure YOur first Packet Filter Firewall.
+ FORMULA: "  Protocol    hacker   victim  Port "
+        tcp,udp,icmp,IP   "any"   cm/cm2   
+21/tcp   open     ftp
+22/tcp   open     ssh
+25/tcp   filtered smtp
+53/tcp   open     domain
+80/tcp   open     http
+110/tcp  open     pop3
+143/tcp  open     imap
+161/tcp  filtered snmp
+443/tcp  open     https
+465/tcp  open     smtps
+993/tcp  open     imaps
+995/tcp  open     pop3s
+2000/tcp open     cisco-sccp
+3306/tcp open     mysql
+5060/tcp open     sip
+
+ex.1: Make a Firewall so that we can meet this Policy:
+cm is a dns,ssh,callmanager server allow: 53,22,2000
+cm2 is web,and SecureWeb server  allow: 80/443
+create a Policy to meet his condition.
+@CUCM
+config t
+NO IP access-list Extended fwpolicy1
+IP access-list Extended fwpolicy1
+ permit Tcp Any host cm Eq 53
+ permit Tcp Any host cm Eq 22
+ permit Tcp Any host cm Eq 2000
+ permit Tcp Any host cm2 Eq 80
+ permit Tcp Any host cm2 Eq 443
+ do sh ip access-list fwpolicy1
+ Int Fa 0/0
+  ip access-group fwpolicy1 IN
+  end
+
+ex.2: Make a Firewall so that we can meet this fwpolicy2:
+cm is a ssh,cucm/sccp,web
+cm2 is secureWEB, 23, dns
+create a fwpolicy2 Policy to meet his condition.
+
+nmap -v cm       nmap -v cm2
+22               443
+2000             23
+80               53
+
+ex.2: Make a Firewall so that we can meet this fwpolicy3:
+cm is a ping,cucm/sccp,
+cm2 is  ssh,web,dns,finger
+create a fwpolicy3 Policy to meet his condition.
+@CUCM
+config t
+NO IP access-list Extended fwpolicy3
+IP access-list Extended fwpolicy3
+ permit icmp any host cm
+ permit tcp any host cm Eq 2000
+ permit tcp any host cm2 Eq 22
+ permit tcp any host cm2 Eq 80
+ permit tcp any host cm2 Eq 53
+ permit tcp any host cm2 Eq 79
+ do sh ip access-list fwpolicy3
+ Int fa 0/0
+  ip access-group fwpolicy3 in
+end
+
+REMOVE POLICY:
+ Int fa 0/0
+  NO ip access-group fwpolicy3 in
+end
+
+TASK5: MULTIPLE HACKER MULTIPLE VICTIM:
+Create a Policy for these conditions:
+pc can ping,telnet cm = 2lines
+pc can web,dns cm2 = 2lines
+p1 can sccp/cucm  cm  = 1line
+p2 can ping cm = 1line
+@cucm:
+NO ip access-group extended fwpolicy5
+ ip access-group extended fwpolicy5
+ Permit icmp Host pc Host cm
+ Permit Tcp Host pc Host cm eq 23
+ Permit Tcp host pc Host cm2 eq 80
+ Permit Tcp host pc Host cm2 eq 53
+ Permit tcp host p1 host cm eq 2000
+ Permit icmp host p2 host cm
+ Int fa 0/0 
+   ip access-group fwpolicy5 iN
+end
+
+How good you are as a CyberSecurity Engineer:
+TASK7: MULTIPLE HACKER MULTIPLE VICTIM:
+Create a Policy for these conditions:
+pc can dns,https,ssh cm = 3lines  : nmap -v cm
+pc can ping,telnet,dns cm2 = 3lines: nmap -v cm2
+p2 can sccp/cucm  cm  = 1line   :buhay is p2
+p1 can ping cm = 1line           :ping p1
+config t
+NO ip access-group extended fwpolicy6
+ ip access-group extended fwpolicy6
+ Permit Tcp Host pc Host cm eq 53
+ Permit Tcp Host pc Host cm eq 22
+ Permit Tcp Host pc Host cm eq 443
+ Permit icmp host pc host cm2
+ Permit Tcp host pc Host cm2 eq 22
+ Permit Tcp host pc Host cm2 eq 53
+ Permit tcp host p2 host cm eq 2000
+ Permit icmp host p1 host cm
+ Int fa 0/0 
+   ip access-group fwpolicy6 iN
+end
+
+Final Example: Make a Policy7 with condition:
+p2 can ping,sccp  cm  = 1line   : 2L
+p1 can sccp cm = 1line           : 1L
+pc can ping,dns,ssh cm		: 3L nmap = 53,22
+pc can http,https,ssh cm2	: 3l nmap = 80,443,ssh
+" proof it works: Buhay 2 phone, pero ping p2 lang!"
+config t
+NO ip access-group extended fwpolicy7
+ ip access-group extended fwpolicy7
+ Permit tcp host p2 host cm eq 2000
+ Permit icmp host p2 host cm
+ Permit icmp host p1 host cm
+ Permit icmp host pc host cm
+ Permit Tcp Host pc Host cm eq 53
+ Permit Tcp Host pc Host cm eq 22
+ Permit Tcp Host pc Host cm2 eq 80
+ Permit Tcp host pc Host cm2 eq 443
+ Permit Tcp host pc Host cm2 eq 22
+
+Remove the Firewall
+ Int fa 0/0 
+   NO ip access-group fwpolicy7 iN
+end
+
+TASK8: CREATING A WEB PROXY OR HIDING BEHIND NAT:
+www.sti.edu.ph:      vs     www.dlsu.edu.ph:
+@EDGE:
+config t
+No access-list 8 permit 10.12.0.0 0.0.255.255
+Int Gi 0/0/0
+ ip nat Inside
+Int gi 0/0/1
+ ip nat Outside
+IP Nat inside source static tcp 10.12.1.10 80 200.0.0.112 8080
+IP Nat inside source static tcp 10.12.1.10 53 200.0.0.112 153
+IP nat inside source list 8 int gi 0/0/1 Overload
+end
+show ip nat translation
+
+victim: nmap -v 200.0.0.100+k
+
+ExamLab Training: Make a PortAddressTranslation:
+10.m.1.9 22 --> 200.0.0.100+m 3022 =
+10.m.1.10 80 --> 200.0.0.100+m 8088 = 
+10.m.1.11 53 --> 200.0.0.100+m 4053 =
+config t
+IP Nat inside source static tcp 10.12.1.9 22 200.0.0.112 3022
+IP Nat inside source static tcp 10.12.1.10 80 200.0.0.112 8088
+IP Nat inside source static tcp 10.12.1.11 53 200.0.0.112 4053
+do sh ip nat translation
+
+TASK9: how to use Network Address Translation to 
+give Internet to your entire Company:
+step1: learn to get internet:
+ping 8.8.8.8: connection to Internet
+ping www.google.com: connection to DNS internet.
+
+how to share internet with EDGE using NAT:
+@edge:
+config t
+ip route 0.0.0.0  0.0.0.0 200.0.0.1
+access-list 8 permit 10.m.0.0 0.0.255.255
+int gi 0/0/0
+ ip nat inside
+int gi 0/0/1
+ ip nat outside
+ip nat inside source list 8 int gi 0/0/1 overload
+test1: ping 8.8.8.8: connection to Internet: LUSOT
+test2: ping www.google.com: connection to DNS internet: sablay!
+
+how to block all PornSites:for FREE: DNS
+superBilis porn: dns 1.1.1.1 / 8.8.8.8
+                    208.67.222.222/208.67.220.220
+
+pornFREE: 208.67.222.123/208.67.220.123
+ipconfig /flushdns
+
+TASK10: How to be a NetworkEngineer in 2023 till 2027
+gi1JP: 192.168.233.185
+gi1PH: 192.168.233.186
+Network Engineer = CCNA, + python + dockerContainer
+                   + RESTapi Programming
+
+how to enable Python and Docker in Cisco:
+VPNjpn:
+config t
+iox
+Int Gi 2
+ip add dhcp
+ip nat outside
+no shut
+Int VirtualPortGroup0
+ ip add 192.168.35.1 255.255.255.0
+ ip nat inside
+ip nat inside source list DOCKERS int gi 2 overload
+ip access-list standard DOCKERS
+ PERMIT 192.168.0.0 0.0.255.255
+!
+app-hosting appid guestshell
+ app-vnic gateway1 virtualportgroup 0 guest-interface 0
+   guest-ipaddress 192.168.35.2 netmask 255.255.255.0
+      exit
+      app-default-gateway 192.168.35.1 guest-interface 0
+      name-server0 1.1.1.1
+   app-resource profile custom
+      cpu 1500
+      memory 512
+ end
+HOW TO TEST:
+UNANGJAPAN: WALA
+
+2nd japan: guestshell enable: -> guestshell run python
+
+3rdJapan: guestshell enable -> guestshell run bash
+
+TASK11: BASIC linux commands:
+sudo su = become root/superbossing
+
+ls / = list all folders
+ip addr = what is your ip address. 
+
+TASK12: Basic Python Commands:
+CISCO: show version
+python:  cli.executep(c)
+import cli
+cfg = ["show version",]
+for c in cfg:
+    cli.executep(cfg)
+
+ex.2: Palit name sa Cisco VS python:
+cisco: hostname CiscoAKO2
+python:
+import cli
+cfg1 = '''hostname PYTHONito'''
+cli.configurep(cfg1)
+
+ex.3: Gawa Dami IPaddress:
+Cisco: show ip int brief
+Python:
+import cli
+cfg2 = '''hostname PythonDami
+int lo 6
+ip add 6.6.6.6 255.255.255.255
+int lo 7
+ip add 7.7.7.7 255.255.255.255
+int lo 8
+ip add 8.8.8.8 255.255.255.255
+int lo 9
+ip add 9.9.9.9 255.255.255.255
+end
+'''
+cli.configurep(cfg2)
+
+@tangalDAmi:
+import cli
+cfg3 = '''hostname TangalDAMI
+No int lo 6
+No int lo 7
+NO int lo 8
+NO int lo 9
+end
+'''
+cli.configurep(cfg3)
+
+
+Network Engineers With Python Skills are PAID 2/3xMore!
+
+TASK12: RESTapi: Representational State Transfer
+                 Application Programming Interface
+Enable RESTapi and YAML: YetAnotherMarkupLanGuage
+                   HTML: 
+VPNJP:
+config t
+ip http secure-server
+ip http authentication local
+restconf
+netconf-yang
+end
+LEARN HOW TO USE postman API testing.
+using Postman:
+Get, Auth:basicAuthention
+     headers:
+     Accept: application/yang-data+json
+     Content-Type: application/yang-data+json
+
+https://192.168.233.158/restconf/data/ietf-interfaces:interfaces
+Gawa ng LOOPBACK sa RESTapi:
+https:///restconf/data/Cisco-IOS-XE-native:native/interface/Loopback
+
+HomeWork for the Hardest Day in CCNA: 
+CSr, linuxdocker, pythondocker, Postman: RestApi.
+
+
+
+
+
+
+
+
+
+
+
+
+
+

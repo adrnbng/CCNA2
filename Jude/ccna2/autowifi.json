@@ -1,0 +1,16 @@
+{
+ "aironet": [
+     {
+        "host_ip": "10.12.10.3",
+        "hostname": "12JudeAP",
+        "username": "admin",
+        "password": "pass",
+        "ssid": "GUEST12-Judeey",
+        "authentication": "open",
+        "key-man": "wpa",
+        "wifi-pass": "C1sc0143",
+        "channel": "4",
+        "enc-mod": "tkip"
+     }
+    ]
+}
